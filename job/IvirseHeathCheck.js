@@ -81,7 +81,7 @@ scheduleJob("0 0 * * * *", async function () {
 
   sendHtmlHealthCheck(
     "doquoctuan311@gmail.com",
-    `Health check ${dayjs().format("DD/MM/YYYY HH:mm:ss")}`,
+    `Health check ${dayjs().format()}`,
     strHtml
   );
 });

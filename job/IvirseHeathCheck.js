@@ -40,9 +40,9 @@ const domainObject = {
   ],
 };
 
-scheduleJob("0 * * * * *", async function () {
+scheduleJob("*/5 * * * * *", async function () {
   const htmlData = [];
-  const countDeadService = 0;
+  let countDeadService = 0;
   for (const key in domainObject) {
     if (Object.hasOwnProperty.call(domainObject, key)) {
       htmlData.push(`
@@ -55,9 +55,9 @@ scheduleJob("0 * * * * *", async function () {
         let status;
         try {
           let response = await axios.get(iterator.host);
-          status = response.status;
+          status = response?.status;
         } catch (error) {
-          status = error.response.status;
+          status = error?.response?.status;
         }
         const alive = [200, 404].includes(status);
         if (!alive) {

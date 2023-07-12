@@ -40,8 +40,9 @@ const domainObject = {
   ],
 };
 
-scheduleJob("0 0 * * * *", async function () {
+scheduleJob("0 * * * * *", async function () {
   const htmlData = [];
+  const countDeadService = 0;
   for (const key in domainObject) {
     if (Object.hasOwnProperty.call(domainObject, key)) {
       htmlData.push(`
@@ -59,6 +60,9 @@ scheduleJob("0 0 * * * *", async function () {
           status = error.response.status;
         }
         const alive = [200, 404].includes(status);
+        if (!alive) {
+          countDeadService++;
+        }
         htmlData.push(`
         <tr>
             <td></td>
@@ -73,15 +77,17 @@ scheduleJob("0 0 * * * *", async function () {
       }
     }
   }
-  const strHtml = replaceAll(
-    healthCheckHtml.toString(),
-    "{$DATA_HERE}",
-    htmlData.join("")
-  );
+  if (countDeadService > 0) {
+    const strHtml = replaceAll(
+      healthCheckHtml.toString(),
+      "{$DATA_HERE}",
+      htmlData.join("")
+    );
 
-  sendHtmlHealthCheck(
-    "doquoctuan311@gmail.com",
-    `Health check ${dayjs().format()}`,
-    strHtml
-  );
+    sendHtmlHealthCheck(
+      "doquoctuan311@gmail.com",
+      `Health check ${dayjs().format()}`,
+      strHtml
+    );
+  }
 });

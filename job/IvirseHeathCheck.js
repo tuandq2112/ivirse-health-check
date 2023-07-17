@@ -40,7 +40,7 @@ const domainObject = {
   ],
 };
 
-scheduleJob("0 * * * * *", async function () {
+scheduleJob("0 0 * * * *", async function () {
   const htmlData = [];
   let countDeadService = 0;
   for (const key in domainObject) {

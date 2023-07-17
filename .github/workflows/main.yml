@@ -32,4 +32,5 @@ jobs:
           git pull --rebase
           git status
           npm install --only=prod
-          pm2 restart ivirse-health-check
+          pm2 stop $ivirse-health-check || true
+          pm2 start ivirse-health-check

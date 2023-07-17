@@ -26,7 +26,10 @@ jobs:
         port: 22
         script: |
           cd /home/build/ivirse-health-check
-          git pull origin master
+          git checkout .
+          git clean -d -f
+          git checkout master
+          git pull --rebase
           git status
           npm install --only=prod
-          pm2 restart node1
+          pm2 restart ivirse-health-check

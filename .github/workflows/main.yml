@@ -31,5 +31,5 @@ jobs:
           git checkout master
           git pull --rebase
           git status
-          npm install --only=prod
+          npm install
           pm2 restart ivirse-health-check
